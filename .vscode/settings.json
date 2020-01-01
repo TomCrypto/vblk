@@ -1,0 +1,14 @@
+{
+  "[rust]": {
+    "editor.formatOnSave": true,
+    "editor.rulers": [100],
+    "editor.tabSize": 4
+  },
+  "files.exclude": {
+    ".gitignore": true,
+    ".vscode": true,
+    "Cargo.lock": true,
+    "target": true
+  },
+  "files.insertFinalNewline": true
+}

@@ -1,0 +1,23 @@
+[package]
+name = "vblk"
+version = "0.1.0"
+edition = "2018"
+license = "MIT"
+authors = ["Thomas Bénéteau <thomas@bitwise.me>"]
+repository = "https://github.com/TomCrypto/vblk"
+description = "Virtual block devices on Linux"
+readme = "README.md"
+categories = ["filesystem"]
+keywords = ["block", "device", "linux", "nbd", "virtual"]
+
+[dependencies.crossbeam-utils]
+version = "0.7"
+
+[dependencies.nix]
+version = "0.16"
+
+[dependencies.zerocopy]
+version = "0.2"
+
+[dev-dependencies.ctrlc]
+version = "3.1"
