@@ -215,6 +215,9 @@ pub unsafe fn mount<P: AsRef<Path>>(
         thread.join().unwrap()
     });
 
-    let _ = nbd::disconnect(file);
-    result.unwrap() // cleaned up
+    if result.is_err() || result.as_ref().unwrap().is_err() {
+        let _ = nbd::disconnect(file); // forced disconnect
+    }
+
+    result.unwrap()
 }
