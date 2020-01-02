@@ -73,6 +73,9 @@ pub trait BlockDevice {
     fn unmount(&mut self) {}
 
     /// Returns the device block size in bytes.
+    ///
+    /// According to the NBD kernel source code, the block size must currently
+    /// be a power of two between 512 bytes and the system page size in bytes.
     fn block_size(&self) -> u32;
 
     /// Returns the device size in blocks.
@@ -123,8 +126,13 @@ pub unsafe fn mount<P: AsRef<Path>>(
         .write(true)
         .open(path.as_ref())?;
 
-    nbd::set_size_blocks(&file, device.blocks())?;
-    nbd::set_blksize(&file, device.block_size())?;
+    let (block_size, blocks) = (device.block_size(), device.blocks());
+
+    assert!(block_size.is_power_of_two());
+    assert!(block_size >= 512);
+
+    nbd::set_blksize(&file, block_size)?;
+    nbd::set_size_blocks(&file, blocks)?;
     nbd::clear_sock(file)?;
 
     let (mut userspace_socket, kernel_socket) = UnixStream::pair()?;

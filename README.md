@@ -3,7 +3,7 @@
 [![Documentation](https://docs.rs/vblk/badge.svg)](https://docs.rs/vblk)
 [![Crates.io](https://img.shields.io/crates/v/vblk.svg)](https://crates.io/crates/vblk)
 
-The `vblk` crate provides an interface to create virtual block devices which call into your Rust code for read and write operations. This is similar to FUSE except that instead of exposing an entire filesystem, you only expose a single fixed-size file as a block device. This can be handy if you are interfacing with a remote block device but don't have any convenient means of mounting it for whatever reason, or for prototyping block device drivers.
+This crate provides an interface to create virtual block devices which call into your Rust code for read and write operations. This is similar to FUSE except that instead of exposing an entire filesystem, you only expose a single fixed-size file as a block device. This can be handy if you are interfacing with a remote block device but don't have any convenient means of mounting it for whatever reason, or for prototyping block device drivers.
 
 This is achieved by (ab)using the Linux kernel's NBD driver rather than implementing a new generic block device driver; a basic NBD client is started in the Rust application serving NBD requests which are shuttled to and from the kernel driver through a Unix domain socket. Most of the time this is done through forking; in this crate a separate thread is started instead for hosting the kernel-side NBD server.
 
